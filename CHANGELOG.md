@@ -119,6 +119,18 @@ below.)
   trim didn't change behavior: reran the full analysis against the same
   real-world inputs and diffed the output raster against the pre-trim
   run - bit-for-bit identical.
+- v0.1.1 was still blocked, on the 2 remaining `B603` "subprocess call"
+  findings on the `Popen()` calls in `run_tool` - the ones bandit itself
+  already rates Low severity, and the only ones actually inherent to
+  calling an external binary at all (there's no way to invoke
+  `whitebox_tools.exe` from Python without some form of process-spawning
+  call). Added justified `# nosec B603` annotations to both call sites
+  (fixed args built entirely from this file's own construction above,
+  `shell=False`, no externally-controlled command string). Confirmed
+  locally that bandit honors the suppression (0 issues reported on those
+  lines) before resubmitting. No functional change - reran the full
+  analysis again and diffed against the pre-annotation run: bit-for-bit
+  identical.
 
 ## Not yet verified
 

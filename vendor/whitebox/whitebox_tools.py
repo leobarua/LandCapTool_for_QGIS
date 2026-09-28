@@ -145,11 +145,16 @@ class WhiteboxTools(object):
                 si = STARTUPINFO()
                 si.dwFlags = STARTF_USESHOWWINDOW
                 si.wShowWindow = 7 #Set window minimized and not activated
-                proc = Popen(args2, shell=False, stdout=PIPE,
+                # nosec B603: args2 is built entirely from this file's own
+                # fixed exe_name/tool-name/flag construction above, shell=False
+                # (no shell metacharacter interpretation), no externally
+                # controlled command string reaches Popen.
+                proc = Popen(args2, shell=False, stdout=PIPE,  # nosec B603
                             stderr=STDOUT, bufsize=1, universal_newlines=True,
                             startupinfo=si)
             else:
-                proc = Popen(args2, shell=False, stdout=PIPE,
+                # nosec B603: same as above - fixed args2, shell=False.
+                proc = Popen(args2, shell=False, stdout=PIPE,  # nosec B603
                             stderr=STDOUT, bufsize=1, universal_newlines=True)
 
             while proc is not None:
