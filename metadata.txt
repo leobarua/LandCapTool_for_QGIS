@@ -1,0 +1,24 @@
+[general]
+name=LandCap Assessment Tool
+qgisMinimumVersion=3.28
+description=Automates land capability classification from DEM, rainfall, soil, land cover, and river/watershed inputs.
+version=0.1.0
+author=Leonardo Barua
+email=ldbarua@up.edu.ph
+
+about=Generates a land capability classification raster (RUSLE-based erosion factors combined with slope, elevation, forest-cover and buffer-zone thematic layers) from a DEM, monthly rainfall rasters, a soil texture vector with a K-factor lookup table, a land cover vector, a river network, a watershed boundary, and an optional protected-area vector. Ported from the standalone LandCap Assessment desktop tool.
+
+tracker=https://github.com/leobarua/LandCapTool_for_QGIS/issues
+repository=https://github.com/leobarua/LandCapTool_for_QGIS
+homepage=https://github.com/leobarua/LandCapTool_for_QGIS
+
+tags=hydrology,land capability,erosion,RUSLE,watershed,classification,raster,land use planning
+
+category=Analysis
+icon=icon.png
+experimental=True
+deprecated=False
+
+hasProcessingProvider=yes
+
+changelog=0.1.0 - Initial QGIS port of the desktop LandCap Assessment Tool.

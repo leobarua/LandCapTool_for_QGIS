@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Third-party binary distribution (see vendor/whitebox/SETUP.md)
+vendor/whitebox/*
+!vendor/whitebox/SETUP.md
+
+# Packaged plugin zips
+dist/
+
+# OS / editor
+.DS_Store
+Thumbs.db
