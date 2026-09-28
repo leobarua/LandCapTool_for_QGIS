@@ -1,8 +1,11 @@
 # Changelog
 
-## 0.1.0 - unreleased
+## 0.1.1 - unreleased
 
-Initial QGIS port of the desktop LandCap Assessment Tool.
+Initial QGIS port of the desktop LandCap Assessment Tool. (0.1.0 was
+submitted to plugins.qgis.org and blocked by their security validator;
+0.1.1 is the same work with that fixed - see the WhiteboxTools trim entry
+below.)
 
 - Depression-filling and D8 flow accumulation stay on bundled WhiteboxTools
   (`vendor/whitebox/`), unchanged from the desktop tool - validated against

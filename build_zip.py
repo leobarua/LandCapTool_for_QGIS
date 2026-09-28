@@ -1,11 +1,17 @@
+import configparser
 import os
 import zipfile
 
 SRC_ROOT = os.path.dirname(os.path.abspath(__file__))
 PLUGIN_DIR_NAME = "landcap_plugin"
+
+config = configparser.ConfigParser()
+config.read(os.path.join(SRC_ROOT, "metadata.txt"))
+VERSION = config["general"]["version"]
+
 OUT_DIR = os.path.join(SRC_ROOT, "dist")
 os.makedirs(OUT_DIR, exist_ok=True)
-OUT_ZIP = os.path.join(OUT_DIR, "landcap_plugin-0.1.0.zip")
+OUT_ZIP = os.path.join(OUT_DIR, f"landcap_plugin-{VERSION}.zip")
 
 EXCLUDE_DIR_NAMES = {"__pycache__", ".git", "dist", "test"}  # test/ is dev-only, not needed at runtime
 EXCLUDE_FILE_NAMES = {".DS_Store", "Thumbs.db"}
