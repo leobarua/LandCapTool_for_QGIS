@@ -259,7 +259,7 @@ class MainDialog(QDialog):
             QMessageBox.critical(self, "Error", "Please select the Soil Vector and K Factor Lookup CSV first.")
             return
         dialog = SoilMatchDialog(self, self.inputs["soil"], self.inputs["k_lookup"])
-        if dialog.exec_() and dialog.result:
+        if dialog.exec() and dialog.result:
             self.inputs["soil_field"] = dialog.result["field"]
             self.inputs["soil_map"] = dialog.build_soil_map()
             QMessageBox.information(self, "Success", "Soil matching is configured.")
@@ -269,7 +269,7 @@ class MainDialog(QDialog):
             QMessageBox.critical(self, "Error", "Please select the Land Cover Vector file first.")
             return
         dialog = ForestSelectDialog(self, self.inputs["land_cover"])
-        if dialog.exec_() and dialog.result:
+        if dialog.exec() and dialog.result:
             self.inputs["land_cover_field"] = dialog.result["field"]
             self.inputs["forest_values"] = dialog.result["values"]
             QMessageBox.information(self, "Success", "Forest selection is configured.")

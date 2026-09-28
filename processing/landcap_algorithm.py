@@ -62,20 +62,20 @@ class LandCapAlgorithm(QgsProcessingAlgorithm):
     def initAlgorithm(self, config=None):
         self.addParameter(QgsProcessingParameterRasterLayer(self.DEM, "DEM"))
         self.addParameter(QgsProcessingParameterVectorLayer(
-            self.WATERSHED, "Watershed boundary", [QgsProcessing.TypeVectorPolygon]))
+            self.WATERSHED, "Watershed boundary", [QgsProcessing.SourceType.TypeVectorPolygon]))
         self.addParameter(QgsProcessingParameterMultipleLayers(
-            self.RAINFALL, "Monthly rainfall rasters", QgsProcessing.TypeRaster))
+            self.RAINFALL, "Monthly rainfall rasters", QgsProcessing.SourceType.TypeRaster))
         self.addParameter(QgsProcessingParameterVectorLayer(
-            self.SOIL, "Soil vector", [QgsProcessing.TypeVectorPolygon]))
+            self.SOIL, "Soil vector", [QgsProcessing.SourceType.TypeVectorPolygon]))
         self.addParameter(QgsProcessingParameterField(
             self.SOIL_TEXTURE_FIELD, "Soil texture field", parentLayerParameterName=self.SOIL))
         self.addParameter(QgsProcessingParameterFile(
             self.K_LOOKUP_TABLE, "K-factor lookup table (CSV, columns: 'Soil Texture', 'Kvalue')",
             extension="csv"))
         self.addParameter(QgsProcessingParameterVectorLayer(
-            self.RIVER, "River network", [QgsProcessing.TypeVectorLine]))
+            self.RIVER, "River network", [QgsProcessing.SourceType.TypeVectorLine]))
         self.addParameter(QgsProcessingParameterVectorLayer(
-            self.LAND_COVER, "Land cover vector", [QgsProcessing.TypeVectorPolygon]))
+            self.LAND_COVER, "Land cover vector", [QgsProcessing.SourceType.TypeVectorPolygon]))
         self.addParameter(QgsProcessingParameterField(
             self.LAND_COVER_FIELD, "Land cover class field", parentLayerParameterName=self.LAND_COVER))
         self.addParameter(QgsProcessingParameterString(
@@ -83,16 +83,16 @@ class LandCapAlgorithm(QgsProcessingAlgorithm):
             "Land cover values that count as forest (comma-separated, exact match)"))
         self.addParameter(QgsProcessingParameterVectorLayer(
             self.PROTECTED_AREA, "Protected area vector (optional)",
-            [QgsProcessing.TypeVectorPolygon], optional=True))
+            [QgsProcessing.SourceType.TypeVectorPolygon], optional=True))
         self.addParameter(QgsProcessingParameterNumber(
             self.SIEVE_SIZE, "Despeckle sieve size (pixels)",
-            type=QgsProcessingParameterNumber.Integer, defaultValue=2, minValue=1))
+            type=QgsProcessingParameterNumber.Type.Integer, defaultValue=2, minValue=1))
         self.addParameter(QgsProcessingParameterNumber(
             self.HOLE_FILL_SIZE, "Despeckle hole-fill size (pixels)",
-            type=QgsProcessingParameterNumber.Integer, defaultValue=10, minValue=1))
+            type=QgsProcessingParameterNumber.Type.Integer, defaultValue=10, minValue=1))
         self.addParameter(QgsProcessingParameterNumber(
             self.ITERATIONS, "Despeckle iterations",
-            type=QgsProcessingParameterNumber.Integer, defaultValue=1, minValue=1))
+            type=QgsProcessingParameterNumber.Type.Integer, defaultValue=1, minValue=1))
         self.addParameter(QgsProcessingParameterFolderDestination(
             self.OUTPUT_FOLDER, "Output folder"))
 

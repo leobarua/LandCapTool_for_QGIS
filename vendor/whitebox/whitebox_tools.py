@@ -141,7 +141,7 @@ class WhiteboxTools(object):
 
             proc = None
 
-            if running_windows and self.start_minimized == True:
+            if running_windows and self.start_minimized:
                 si = STARTUPINFO()
                 si.dwFlags = STARTF_USESHOWWINDOW
                 si.wShowWindow = 7 #Set window minimized and not activated

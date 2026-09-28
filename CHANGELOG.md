@@ -131,11 +131,26 @@ below.)
   lines) before resubmitting. No functional change - reran the full
   analysis again and diffed against the pre-annotation run: bit-for-bit
   identical.
+- plugins.qgis.org's Qt6 compatibility check flagged `dialog.exec_()` (Qt5
+  name, renamed to `exec()` in Qt6 - fixed by switching to `.exec()`,
+  which PyQt5 5.9+ already supports as an alias, so this works on both)
+  and several bare `QgsProcessing.TypeXxx`/`QgsProcessingParameterNumber.
+  Integer` enum references in `processing/landcap_algorithm.py` - these
+  need the nested scope (`QgsProcessing.SourceType.TypeXxx`,
+  `QgsProcessingParameterNumber.Type.Integer`) under strict Qt6 enum
+  handling. Their flake8 check also flagged `== True` in the vendored
+  `whitebox_tools.py` (E712) - fixed to a plain truthiness check. Verified
+  live: `LandCapAlgorithm.initAlgorithm()` now runs against a real QGIS
+  instance and registers all 15 parameters without error - this is the
+  first time the Processing Toolbox entry point has actually been
+  exercised at all (previously only the dialog path had real-world
+  testing, per the note below).
 
 ## Not yet verified
 
-- The guided dialog (`gui/main_dialog.py`) has since been confirmed working
-  in real QGIS use (full run, re-simplify, auto-add-to-view, About tab).
-- The Processing Toolbox entry point (`processing/landcap_algorithm.py`)
-  has *not* been run yet - only the dialog path has real-world mileage so
-  far.
+- The guided dialog (`gui/main_dialog.py`) has been confirmed working in
+  real QGIS use (full run, re-simplify, auto-add-to-view, About tab).
+- The Processing Toolbox entry point's `initAlgorithm()` (parameter
+  registration) has been verified live; `processAlgorithm()` (actually
+  running the analysis through the Toolbox rather than the dialog) has
+  not been exercised yet.
