@@ -28,9 +28,9 @@ def test_best_match_no_close_match_still_returns_something():
 
 
 def test_read_k_lookup(tmp_path=None):
-    path = tempfile.mktemp(suffix=".csv")
+    fd, path = tempfile.mkstemp(suffix=".csv")
     try:
-        with open(path, "w", newline="") as f:
+        with os.fdopen(fd, "w", newline="") as f:
             writer = csv.writer(f)
             writer.writerow(["Soil Texture", "Kvalue"])
             writer.writerow(["Clay Loam", "0.30"])

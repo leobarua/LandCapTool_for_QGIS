@@ -7,7 +7,7 @@ OUT_DIR = os.path.join(SRC_ROOT, "dist")
 os.makedirs(OUT_DIR, exist_ok=True)
 OUT_ZIP = os.path.join(OUT_DIR, "landcap_plugin-0.1.0.zip")
 
-EXCLUDE_DIR_NAMES = {"__pycache__", ".git", "dist"}
+EXCLUDE_DIR_NAMES = {"__pycache__", ".git", "dist", "test"}  # test/ is dev-only, not needed at runtime
 EXCLUDE_FILE_NAMES = {".DS_Store", "Thumbs.db"}
 EXCLUDE_FILE_SUFFIXES = (".pyc", ".pyo")
 

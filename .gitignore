@@ -3,9 +3,14 @@ __pycache__/
 *.pyc
 *.pyo
 
-# Third-party binary distribution (see vendor/whitebox/SETUP.md)
+# Platform-specific WhiteboxTools binary (see vendor/whitebox/SETUP.md) -
+# whitebox_tools.py is tracked (it's our trimmed, security-reviewed wrapper,
+# not a vanilla third-party download), only the binary itself is per-platform
 vendor/whitebox/*
 !vendor/whitebox/SETUP.md
+!vendor/whitebox/whitebox_tools.py
+!vendor/whitebox/LICENSE.txt
+!vendor/whitebox/settings.json
 
 # Packaged plugin zips
 dist/

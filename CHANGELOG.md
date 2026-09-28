@@ -96,6 +96,26 @@ Initial QGIS port of the desktop LandCap Assessment Tool.
   visible without leaving QGIS - edits to `README.md` show up next time the
   dialog opens. Verified live: 3 tabs present, markdown rendering confirmed
   available and working in this QGIS's Qt build.
+- plugins.qgis.org's validator blocked v0.1.0 as a critical security risk
+  (bandit findings against every `.py` file in the zip, including vendored
+  code the plugin never calls). Trimmed `vendor/whitebox/whitebox_tools.py`
+  from the full upstream API (~570 tool-wrapper methods, 10,701 lines) down
+  to just `fill_depressions`/`d8_flow_accumulation` and the `run_tool`
+  machinery they depend on (221 lines) - this removed the extension-
+  installer/license-registration/self-updater code entirely, which is
+  where the worst findings (`os.system` with string-concatenated shell
+  commands, `urllib.request.urlopen`, partial executable paths) lived, none
+  of it reachable from this plugin. Also fixed a real (if minor) issue in
+  our own `test/test_soil_match.py`: `tempfile.mktemp()` has a documented
+  TOCTOU race condition - switched to `tempfile.mkstemp()`. `test/` is now
+  excluded from the packaged zip entirely (dev-only, not needed at
+  runtime), which also drops bandit's routine `assert`-in-tests warnings
+  from what ships. Result, scanning exactly what's in the zip: 24 findings
+  (several Medium) -> 4 (all Low, all just "you imported subprocess" /
+  "you called Popen with the already-safe shell=False"). Verified the
+  trim didn't change behavior: reran the full analysis against the same
+  real-world inputs and diffed the output raster against the pre-trim
+  run - bit-for-bit identical.
 
 ## Not yet verified
 

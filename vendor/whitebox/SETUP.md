@@ -1,21 +1,33 @@
-This folder needs only what whitebox_tools.py's subprocess wrapper actually
-uses - confirmed by reading its source: self.exe_path defaults to whatever
-directory whitebox_tools.py itself lives in, it chdir's there before every
-tool call, and it only reads settings.json from that same directory. The
-full official download's WBT/ subfolder (duplicate exe + assets for the
-WbRunner GUI) and plugins/ folder (separately-licensed extension tools we
-never call, e.g. heat_map, raster_calculator) are unreferenced by our code
-and were removed - dropped the vendored footprint from ~198MB to ~28MB.
+`whitebox_tools.py`, `LICENSE.txt`, and `settings.json` are tracked in git
+and already here - nothing to do for those. The only thing you need to add
+per platform is the compiled binary:
 
-Required per platform:
-  whitebox_tools.py
-  whitebox_tools.exe / whitebox_tools (per-platform binary)
-  settings.json
-  LICENSE.txt
+  whitebox_tools.exe (Windows, already included)
+  whitebox_tools     (Linux/macOS - not tracked, download separately)
 
-Not tracked in git due to size. Download the full distribution from:
-https://www.whiteboxgeo.com/geospatial-software/
-...then copy only the files above into this folder per platform.
+Get it from https://www.whiteboxgeo.com/geospatial-software/ and drop the
+binary for your platform straight into this folder.
+
+`whitebox_tools.py` here is NOT the vanilla upstream file - it's trimmed
+down from the full ~570-method, 10,701-line WhiteboxTools Python API to
+just the two tool calls this plugin actually uses (`fill_depressions`,
+`d8_flow_accumulation`) plus the `run_tool` machinery they depend on. Do
+**not** overwrite it with a fresh download from upstream: the full file
+reintroduces extension-install/license-registration/self-update code paths
+this plugin never calls, which is exactly what got v0.1.0 blocked by
+plugins.qgis.org's security scanner (bandit flags `os.system()` with
+string-concatenated shell commands and `urllib.request.urlopen()` in that
+unused code, regardless of reachability). See CHANGELOG.md for the before/
+after finding counts. If you need a different upstream tool this plugin
+doesn't currently call, port just that method over rather than restoring
+the whole file.
+
+The full official download also ships a `WBT/` subfolder (duplicate exe +
+GUI runner assets) and a `plugins/` folder (separately-licensed extension
+tools, e.g. heat_map, raster_calculator) - both are unreferenced by
+`whitebox_tools.py`'s own logic (confirmed by reading its source: it always
+resolves its working directory to wherever it itself lives, never `WBT/`)
+and aren't needed here.
 
 Note: WhiteboxTools ships its own readme.txt - on a case-insensitive
 filesystem (Windows, default macOS) that collides with a same-named setup
